@@ -1,0 +1,34 @@
+PODS:
+  - DLBlurredImage (1.0.0)
+  - HexColors (2.2.1)
+  - Mantle (2.1.0):
+    - Mantle/extobjc (= 2.1.0)
+  - Mantle/extobjc (2.1.0)
+  - ReactiveObjC (3.1.1)
+  - TSMessages (0.9.12):
+    - HexColors (~> 2.2.0)
+
+DEPENDENCIES:
+  - DLBlurredImage (~> 1.0.0)
+  - Mantle (= 2.1.0)
+  - ReactiveObjC (~> 3.1)
+  - TSMessages (~> 0.9)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - DLBlurredImage
+    - HexColors
+    - Mantle
+    - ReactiveObjC
+    - TSMessages
+
+SPEC CHECKSUMS:
+  DLBlurredImage: 67f31fa36a3435cf6adc8705a110dc3fc1fbffc7
+  HexColors: abfd172e329dab59888614ccba6f216cec59289d
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
+
+PODFILE CHECKSUM: d9273c3b4b34dd317f064372a9a00cf215170cb0
+
+COCOAPODS: 1.6.2
