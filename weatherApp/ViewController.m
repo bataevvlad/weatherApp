@@ -9,12 +9,27 @@
 #import "ViewController.h"
 #import <DLBlurredImage/UIImageView+DLBlurredImage.h>
 
+static const NSInteger cellHeight = 44;
+
+static const CGFloat   inset = 20;
+static const CGFloat   temperatureHeight = 110;
+static const CGFloat   hiloHeight = 40;
+static const CGFloat   iconHeight = 30;
+
 @interface ViewController ()
 
 @property (strong, nonatomic) UIImageView *backgroundImageView;
 @property (strong, nonatomic) UIImageView *blurredImageView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic) CGFloat     screenHeight;
+@property (assign, nonatomic) CGRect      headerFrame;
+
+@property (strong, nonatomic) UIView  *header;
+@property (strong, nonatomic) UILabel *temperatureLabel;
+@property (strong, nonatomic) UILabel *hiloLabel;
+@property (strong, nonatomic) UILabel *cityLabel;
+@property (strong, nonatomic) UILabel *conditionsLabel;
+@property (strong, nonatomic) UIImageView *iconView;
 
 @end
 
@@ -48,6 +63,14 @@
     self.tableView.pagingEnabled = YES;
     [self.view addSubview:self.tableView];
     
+    self.headerFrame = [UIScreen mainScreen].bounds;
+
+    self.header = [[UIView alloc] initWithFrame:self.headerFrame];
+    self.header.backgroundColor = [UIColor clearColor];
+    self.tableView.tableHeaderView = self.header;
+    
+    [self hiloMethod];
+    
 }
 
 - (void)viewWillLayoutSubviews {
@@ -69,6 +92,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Frames & Margins
+
+- (void) hiloMethod {
+    
+    CGRect hiloFrame = CGRectMake(inset, self.headerFrame.size.height - (3* hiloHeight), self.headerFrame.size.width + inset, hiloHeight);
+    
+    UILabel *hiloLabel = [[UILabel alloc] initWithFrame:hiloFrame];
+    hiloLabel.backgroundColor = [UIColor clearColor];
+    hiloLabel.textColor = [UIColor whiteColor];
+    hiloLabel.text = @"0c / 0c";
+    hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:28];
+    [self.header addSubview:hiloLabel];
+}
+
 
 #pragma mark - UITableViewDataSource
 
@@ -108,7 +146,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO: Determine cell height based on screen;
     
-    return 44;
+    return cellHeight;
 }
 
 
