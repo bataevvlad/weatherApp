@@ -44,6 +44,10 @@
 		84871456228EF92200A30195 /* Blood.png in Resources */ = {isa = PBXBuildFile; fileRef = 84871453228EF92200A30195 /* Blood.png */; };
 		84871457228EF92200A30195 /* Sun.png in Resources */ = {isa = PBXBuildFile; fileRef = 84871454228EF92200A30195 /* Sun.png */; };
 		8487145D228EFCE200A30195 /* Sun2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8487145C228EFCE200A30195 /* Sun2.png */; };
+		84871461229089BF00A30195 /* VBClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 84871460229089BF00A30195 /* VBClient.m */; };
+		84871464229089D500A30195 /* VBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84871463229089D500A30195 /* VBManager.m */; };
+		84871467229089FD00A30195 /* VBCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 84871466229089FD00A30195 /* VBCondition.m */; };
+		8487146A22908A1C00A30195 /* VBDailyForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487146922908A1C00A30195 /* VBDailyForecast.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +93,14 @@
 		84871453228EF92200A30195 /* Blood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blood.png; sourceTree = "<group>"; };
 		84871454228EF92200A30195 /* Sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sun.png; sourceTree = "<group>"; };
 		8487145C228EFCE200A30195 /* Sun2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sun2.png; sourceTree = "<group>"; };
+		8487145F229089BF00A30195 /* VBClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBClient.h; sourceTree = "<group>"; };
+		84871460229089BF00A30195 /* VBClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VBClient.m; sourceTree = "<group>"; };
+		84871462229089D500A30195 /* VBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBManager.h; sourceTree = "<group>"; };
+		84871463229089D500A30195 /* VBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VBManager.m; sourceTree = "<group>"; };
+		84871465229089FD00A30195 /* VBCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBCondition.h; sourceTree = "<group>"; };
+		84871466229089FD00A30195 /* VBCondition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VBCondition.m; sourceTree = "<group>"; };
+		8487146822908A1C00A30195 /* VBDailyForecast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBDailyForecast.h; sourceTree = "<group>"; };
+		8487146922908A1C00A30195 /* VBDailyForecast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VBDailyForecast.m; sourceTree = "<group>"; };
 		E10595C7F51941BBF0CA42A7 /* libPods-weatherApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-weatherApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -135,6 +147,7 @@
 		84871405228EEB5900A30195 /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				8487145E2290893B00A30195 /* Model */,
 				84871406228EEB5900A30195 /* AppDelegate.h */,
 				84871407228EEB5900A30195 /* AppDelegate.m */,
 				84871409228EEB5900A30195 /* ViewController.h */,
@@ -191,6 +204,21 @@
 				84871437228EEFD800A30195 /* weather-tstorm@2x.png */,
 			);
 			path = "Weather Icons";
+			sourceTree = "<group>";
+		};
+		8487145E2290893B00A30195 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8487145F229089BF00A30195 /* VBClient.h */,
+				84871460229089BF00A30195 /* VBClient.m */,
+				84871462229089D500A30195 /* VBManager.h */,
+				84871463229089D500A30195 /* VBManager.m */,
+				84871465229089FD00A30195 /* VBCondition.h */,
+				84871466229089FD00A30195 /* VBCondition.m */,
+				8487146822908A1C00A30195 /* VBDailyForecast.h */,
+				8487146922908A1C00A30195 /* VBDailyForecast.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BEC01F36A55A24270D0DEE95 /* Frameworks */ = {
@@ -375,9 +403,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8487146A22908A1C00A30195 /* VBDailyForecast.m in Sources */,
+				84871461229089BF00A30195 /* VBClient.m in Sources */,
+				84871467229089FD00A30195 /* VBCondition.m in Sources */,
 				8487140B228EEB5900A30195 /* ViewController.m in Sources */,
 				84871416228EEB5900A30195 /* main.m in Sources */,
 				84871408228EEB5900A30195 /* AppDelegate.m in Sources */,
+				84871464229089D500A30195 /* VBManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

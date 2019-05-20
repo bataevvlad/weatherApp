@@ -162,6 +162,7 @@ static const CGFloat   iconHeight = 30;
 }
 
 - (void) cityLabelOutput {
+    
     UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.bounds.size.width, 30)];
     cityLabel.backgroundColor = [UIColor clearColor];
     cityLabel.textColor = [UIColor whiteColor];
@@ -211,12 +212,5 @@ static const CGFloat   iconHeight = 30;
     
     return cellHeight;
 }
-
-
-
-
-
-
-
 
 @end
