@@ -10,4 +10,14 @@
 
 @implementation VBDailyForecast
 
++ (NSDictionary*) JSONKeyPathsByPropertyKey {
+    //Create dict for storing;
+    NSMutableDictionary *paths = [[super JSONKeyPathsByPropertyKey] mutableCopy];
+    //changing key maps;
+    paths[@"tempHigh"] = @"temp.max";
+    paths[@"temLow"] = @"temp.min";
+    
+    return paths;
+}
+
 @end

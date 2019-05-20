@@ -69,11 +69,44 @@
               };
 }
 
+//Converting data;
++(NSValueTransformer*)dateJSONTransformer{
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
+        return [NSDate dateWithTimeIntervalSince1970:string.floatValue];
+    } reverseBlock:^id(NSDate *date, BOOL *success, NSError *__autoreleasing *error) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
+//sunriseTransform
++(NSValueTransformer*)sunriseTransformer {
+    return [self dateJSONTransformer];
+}
+//sunset trnsform;
++(NSValueTransformer*)sunsetTransformer {
+    return [self dateJSONTransformer];
+}
+
+//conditions converter;
++(NSValueTransformer*)weatherDescriptionJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
+        return [values firstObject];
+    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
+        return @[string];
+    }];
+}
+
++ (NSValueTransformer*) weatherJSONTransformer {
+    return [self weatherDescriptionJSONTransformer];
+}
+
++ (NSValueTransformer*) iconJSONTransformer {
+    return [self weatherDescriptionJSONTransformer];
+}
+
+
 - (NSString*) imageName {
-    
-    
-    
-    
+    return nil;
 }
 
 @end
