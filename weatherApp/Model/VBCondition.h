@@ -6,7 +6,7 @@
 //  Copyright © 2019 bataevvlad. All rights reserved.
 //
 
-#import "MTLModel.h"
+//#import "MTLModel.h"
 #import <Mantle.h>
 
 @interface VBCondition : MTLModel <MTLJSONSerializing>

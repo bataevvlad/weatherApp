@@ -15,7 +15,7 @@
     NSMutableDictionary *paths = [[super JSONKeyPathsByPropertyKey] mutableCopy];
     //changing key maps;
     paths[@"tempHigh"] = @"temp.max";
-    paths[@"temLow"] = @"temp.min";
+    paths[@"temLow"]   = @"temp.min";
     
     return paths;
 }

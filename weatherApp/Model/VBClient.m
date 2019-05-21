@@ -10,12 +10,18 @@
 #import "VBCondition.h"
 #import "VBDailyForecast.h"
 
+@interface VBClient ()
+
+@property (strong, nonatomic) NSURLSession *session;
+
+@end
+
 @implementation VBClient
 
 -(id) init {
-    if (self == [super init]) {
+    if (self = [super init]) {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        self.session = [NSURLSession sessionWithConfiguration:config];
+        _session = [NSURLSession sessionWithConfiguration:config];
     }
     return self;
 }
@@ -62,26 +68,26 @@
 //current conditions;
 - (RACSignal*) fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate{
     //Format URL;
-    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
 
     //create signal;
-    return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
         return [MTLJSONAdapter modelOfClass:[VBCondition class] fromJSONDictionary:json error:nil];
     }];
 }
 
-- (RACSignal*) fetchHourlyForecastForLoaction:(CLLocationCoordinate2D)coordinate {
+- (RACSignal*) fetchHourlyForecastForLocation:(CLLocationCoordinate2D)coordinate {
     
-    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/forecast/hourly?lat=%f&lon=%f&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/hourly?lat=%f&lon=%f&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
     
     NSURL *url = [NSURL URLWithString:urlString];
     //reusing fetchJSON;
-    return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
         //perform reactivecocoa operation lists;
         RACSequence *list = [json[@"list"] rac_sequence];
         //new list of objects;
-        return [[list map:^id _Nullable(NSDictionary *item) {
+        return [[list map:^(NSDictionary *item) {
             //converting;
             return [MTLJSONAdapter modelOfClass:[VBCondition class] fromJSONDictionary:item error:nil];
             //get like array;
@@ -89,19 +95,18 @@
     }];
 }
 
-- (RACSignal*) fetchDailyForecastForLoaction:(CLLocationCoordinate2D)coordinate {
+- (RACSignal*) fetchDailyForecastForLocation:(CLLocationCoordinate2D)coordinate {
     
-    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&cnt=10&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&cnt=10&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
     //usin fetch to convert;
-    return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
         //build sequense;
         RACSequence *list = [json[@"list"] rac_sequence];
-        
-        //USe func for mapping;
-        return [[list map:^id _Nullable(NSDictionary *item) {
+        //Use func for mapping;
+        return [[list map:^(NSDictionary *item) {
             return [MTLJSONAdapter modelOfClass:[VBDailyForecast class] fromJSONDictionary:item error:nil];
         }] array];
     }];

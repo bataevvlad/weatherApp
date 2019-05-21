@@ -60,7 +60,7 @@
         //derive subcr on main thread;
     }] deliverOn:RACScheduler.mainThreadScheduler]
          //if error, log it;
-    subscribeError:^(NSError * _Nullable error) {
+    subscribeError:^(NSError *error) {
         [TSMessage showNotificationWithTitle:@"Error" subtitle:@"There was a problem due last update" type:TSMessageNotificationTypeError];
     }];
     }
@@ -74,7 +74,7 @@
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray*)locations {
     //ignoring first loaction;
     //it always cached;
     if (self.isFirstUpdate) {
@@ -101,13 +101,13 @@
 }
 
 - (RACSignal*) updateHourlyForecast {
-    return [[self.client fetchHourlyForecastForLoaction:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
+    return [[self.client fetchHourlyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
         self.hourlyForecast = conditions;
     }];
 }
 
 - (RACSignal*) updateDailyForecast {
-    return [[self.client fetchDailyForecastForLoaction:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
+    return [[self.client fetchDailyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
         self.dailyForecast = conditions;
     }];
 }

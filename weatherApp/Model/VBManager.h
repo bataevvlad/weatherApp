@@ -6,12 +6,10 @@
 //  Copyright © 2019 bataevvlad. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <ReactiveObjC.h>
-#import "VBCondition.h"
-
 @import Foundation;
 @import CoreLocation;
+#import <ReactiveObjC/ReactiveObjC.h>
+#import "VBCondition.h"
 
 @interface VBManager : NSObject <CLLocationManagerDelegate>
 
