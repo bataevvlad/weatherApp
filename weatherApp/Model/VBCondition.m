@@ -60,30 +60,30 @@
 }
 
 //Converting data;
-+(NSValueTransformer*)dateJSONTransformer{
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
-        return [NSDate dateWithTimeIntervalSince1970:string.floatValue];
++ (NSValueTransformer *)dateJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *value, BOOL *success, NSError *__autoreleasing *error) {
+        return [NSDate dateWithTimeIntervalSince1970:value.floatValue];
     } reverseBlock:^id(NSDate *date, BOOL *success, NSError *__autoreleasing *error) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
     }];
 }
 
 //sunriseTransform
-+(NSValueTransformer*)sunriseTransformer {
++(NSValueTransformer*)sunriseJSONTransformer {
     return [self dateJSONTransformer];
 }
 //sunset trnsform;
-+(NSValueTransformer*)sunsetTransformer {
++(NSValueTransformer*)sunsetJSONTransformer {
     return [self dateJSONTransformer];
 }
 
-+ (NSValueTransformer*)conditionDescriptionJSONTransformer {
++ (NSValueTransformer *)conditionDescriptionJSONTransformer {
     //+transformerUsingForwardBlock:reverseBlock:
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
+    return [MTLValueTransformer transformerUsingForwardBlock:^(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
         NSDictionary *weatherInfo = values.firstObject;
         return weatherInfo[@"description"];
-    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
-        return @[@{@"condition":string}];
+    } reverseBlock:^(NSString *str, BOOL *success, NSError *__autoreleasing *error) {
+        return @[@{@"condition":str}];
     }];
 }
 
@@ -124,3 +124,4 @@
 }
 
 @end
+
