@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <DLBlurredImage/UIImageView+DLBlurredImage.h>
+#import "VBManager.h"
 
 static const NSInteger cellHeight = 44;
 
@@ -79,6 +80,9 @@ static const CGFloat   iconHeight = 30;
     [self iconOutput];
     [self conditionsOutput];
     [self cityLabelOutput];
+    
+    //find curent location;
+    [[VBManager sharedManager] findCurrentLocation];
     
 }
 

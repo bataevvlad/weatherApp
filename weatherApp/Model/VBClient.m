@@ -59,4 +59,55 @@
     }];
 }
 
+//current conditions;
+- (RACSignal*) fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate{
+    //Format URL;
+    ///wrong url;
+    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat={27.56668}&lon={53.900002}", coordinate.latitude, coordinate.longitude];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ///
+
+    //create signal;
+    return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
+        return [MTLJSONAdapter modelOfClass:[VBCondition class] fromJSONDictionary:json error:nil];
+    }];
+}
+
+- (RACSignal*) fetchHourlyForecastForLoaction:(CLLocationCoordinate2D)coordinate {
+    ///wrong url;
+    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat={27.56668}&lon={53.900002}", coordinate.latitude, coordinate.longitude];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    //reusing fetchJSON;
+    return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
+        //perform reactivecocoa operation lists;
+        RACSequence *list = [json[@"list"] rac_sequence];
+        //new list of objects;
+        return [[list map:^id _Nullable(NSDictionary *item) {
+            //converting;
+            return [MTLJSONAdapter modelOfClass:[VBCondition class] fromJSONDictionary:item error:nil];
+            //get like array;
+        }] array];
+    }];
+}
+
+- (RACSignal*) fetchDailyForecastForLoaction:(CLLocationCoordinate2D)coordinate {
+    ///wrong url;
+    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat={27.56668}&lon={53.900002}", coordinate.latitude, coordinate.longitude];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //usin fetch to convert;
+    return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
+        //build sequense;
+        RACSequence *list = [json[@"list"] rac_sequence];
+        
+        //USe func for mapping;
+        return [[list map:^id _Nullable(NSDictionary *item) {
+            return [MTLJSONAdapter modelOfClass:[VBDailyForecast class] fromJSONDictionary:item error:nil];
+        }] array];
+    }];
+}
+
+
 @end
