@@ -13,8 +13,8 @@
 @interface VBManager ()
 
 //for change values privately;
-@property (strong, readwrite, nonatomic) CLLocation  *currentLocation;
 @property (strong, readwrite, nonatomic) VBCondition *currentCondition;
+@property (strong, readwrite, nonatomic) CLLocation  *currentLocation;
 @property (strong, readwrite, nonatomic) NSArray *hourlyForecast;
 @property (strong, readwrite, nonatomic) NSArray *dailyForecast;
 
@@ -49,7 +49,6 @@
         //use macro to return signal (similar to KVO);
         //must not be nill;
         [[[[RACObserve(self, currentLocation) ignore:nil]
-
         //subscr to all signals;
     flattenMap:^(CLLocation *newLoaction) {
         return [RACSignal merge:@[
@@ -63,7 +62,7 @@
     subscribeError:^(NSError *error) {
         [TSMessage showNotificationWithTitle:@"Error" subtitle:@"There was a problem due last update" type:TSMessageNotificationTypeError];
     }];
-    }
+}
     return self;
 }
 
@@ -81,9 +80,7 @@
         self.isFirstUpdate = NO;
         return;
     }
-    
-    CLLocation *location = [locations lastObject];
-    
+    CLLocation *location = locations.lastObject;
     //stop updates when proper accuracy;
     if (location.horizontalAccuracy > 0) {
         //setting key triggers;
@@ -92,22 +89,37 @@
     }
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status)
+    {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {                [self.locationManager requestWhenInUseAuthorization];
+            }
+            break;
+        default:
+            break;
+    }}
+
 #pragma mark Condition Updates
 
 - (RACSignal*)updateCurrentConditions {
-    return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(VBCondition *condition) {
+    return [[self.client
+             fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(VBCondition *condition) {
         self.currentCondition = condition;
     }];
 }
 
 - (RACSignal*) updateHourlyForecast {
-    return [[self.client fetchHourlyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
+    return [[self.client
+             fetchHourlyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
         self.hourlyForecast = conditions;
     }];
 }
 
 - (RACSignal*) updateDailyForecast {
-    return [[self.client fetchDailyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
+    return [[self.client
+             fetchDailyForecastForLocation:self.currentLocation.coordinate]
+            doNext:^(NSArray *conditions) {
         self.dailyForecast = conditions;
     }];
 }

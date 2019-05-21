@@ -6,8 +6,8 @@
 //  Copyright © 2019 bataevvlad. All rights reserved.
 //
 
-@import Foundation;
-@import CoreLocation;
+#import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "VBCondition.h"
 

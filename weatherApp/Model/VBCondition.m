@@ -11,7 +11,6 @@
 @implementation VBCondition
 
 + (NSDictionary*)imageMap {
-    
     static NSDictionary *_imageMap = nil;
     if (! _imageMap) {
         _imageMap = @{
@@ -38,66 +37,26 @@
     return _imageMap;
 }
 
-
-
-+ (NSDictionary*) JSONKeyPathsByPropertyKey {
-    return  @{
-              @"date"         : @"dt",
-              @"locationName" : @"name",
-              //main;
-              @"temperature"  : @"main.temp",
-              @"humidity"     : @"main.humidity",
-              @"tempLow"      : @"main.temp_min",
-              @"tempHigh"     : @"main.temp_max",
-              @"grndLevel"    : @"main.grnd_level",
-              //wind;
-              @"windDeg"      : @"wind.deg",
-              @"windSpeed"    : @"wind.speed",
-              //clouds;
-              @"clouds"       : @"clouds.all",
-              //rain;
-              @"rain"         : @"rain.3h",
-              //snow;
-              @"snow"         : @"snow.3h",
-              //weather;
-              @"condDescription" : @"weather.description",
-              @"condition"    : @"weather.main",
-              @"icon"         : @"weather.icon",
-              //sys;
-              @"sunrise"      : @"sys.sunrise",
-              @"sunset"       : @"sys.sunset",
-              };
-}
-
-
 - (NSString*) imageName {
     return [VBCondition imageMap][self.icon];
 }
 
-#define MPS_TO_MPH 2.23694f
-
-+ (NSValueTransformer*)windSpeedJSONTransformer {
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSNumber *number, BOOL *success, NSError *__autoreleasing *error) {
-        return @(number.floatValue * MPS_TO_MPH);
-    } reverseBlock:^id(NSNumber *speed, BOOL *success, NSError *__autoreleasing *error) {
-        return @(speed.floatValue/MPS_TO_MPH);
-    }];
-}
-
-+ (NSValueTransformer*)conditionDescriptionJSONTransformer {
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
-        return [values firstObject];
-    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
-        return @[string];
-    }];
-}
-
-+ (NSValueTransformer*) conditionJSONTransformer {
-    return [self conditionDescriptionJSONTransformer];
-}
-
-+ (NSValueTransformer*) iconJSONTransformer {
-    return [self conditionDescriptionJSONTransformer];
++ (NSDictionary*) JSONKeyPathsByPropertyKey {
+    return  @{
+              @"date": @"dt",
+              @"locationName": @"name",
+              @"humidity": @"main.humidity",
+              @"temperature": @"main.temp",
+              @"tempHigh": @"main.temp_max",
+              @"tempLow": @"main.temp_min",
+              @"sunrise": @"sys.sunrise",
+              @"sunset": @"sys.sunset",
+              @"conditionDescription": @"weather",
+              @"condition": @"weather",
+              @"icon": @"weather",
+              @"windBearing": @"wind.deg",
+              @"windSpeed": @"wind.speed"
+              };
 }
 
 //Converting data;
@@ -118,22 +77,50 @@
     return [self dateJSONTransformer];
 }
 
-////conditions converter;
-//+(NSValueTransformer*)weatherDescriptionJSONTransformer {
-//    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
-//        return [values firstObject];
-//    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
-//        return @[string];
-//    }];
-//}
-//
-//+ (NSValueTransformer*) weatherJSONTransformer {
-//    return [self weatherDescriptionJSONTransformer];
-//}
-//
-//+ (NSValueTransformer*) iconJSONTransformer {
-//    return [self weatherDescriptionJSONTransformer];
-//}
++ (NSValueTransformer*)conditionDescriptionJSONTransformer {
+    //+transformerUsingForwardBlock:reverseBlock:
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
+        NSDictionary *weatherInfo = values.firstObject;
+        return weatherInfo[@"description"];
+    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
+        return @[@{@"condition":string}];
+    }];
+}
 
++ (NSValueTransformer*) conditionJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
+        NSDictionary *weatherInfo = values.firstObject;
+        return weatherInfo[@"main"];
+    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
+        return @[@{@"conditionDescription":string}];
+    }];
+}
+
++ (NSValueTransformer*) iconJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *values, BOOL *success, NSError *__autoreleasing *error) {
+        NSDictionary *weatherInfo = values.firstObject;
+        return weatherInfo[@"icon"];
+    } reverseBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
+        return @[@{@"icon":string}];
+    }];
+}
+
++ (NSValueTransformer *)temperatureJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSNumber *value, BOOL *success, NSError *__autoreleasing *error) {
+        return @(value.floatValue - 273.15);
+    }];
+}
+
++ (NSValueTransformer *)tempHighJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSNumber *value, BOOL *success, NSError *__autoreleasing *error) {
+        return @(value.floatValue - 273.15);
+    }];
+}
+
++ (NSValueTransformer *)tempLowJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSNumber *value, BOOL *success, NSError *__autoreleasing *error) {
+        return @(value.floatValue - 273.15);
+    }];
+}
 
 @end

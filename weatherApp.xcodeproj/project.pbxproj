@@ -209,14 +209,14 @@
 		8487145E2290893B00A30195 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8487145F229089BF00A30195 /* VBClient.h */,
-				84871460229089BF00A30195 /* VBClient.m */,
 				84871462229089D500A30195 /* VBManager.h */,
 				84871463229089D500A30195 /* VBManager.m */,
-				84871465229089FD00A30195 /* VBCondition.h */,
-				84871466229089FD00A30195 /* VBCondition.m */,
+				8487145F229089BF00A30195 /* VBClient.h */,
+				84871460229089BF00A30195 /* VBClient.m */,
 				8487146822908A1C00A30195 /* VBDailyForecast.h */,
 				8487146922908A1C00A30195 /* VBDailyForecast.m */,
+				84871465229089FD00A30195 /* VBCondition.h */,
+				84871466229089FD00A30195 /* VBCondition.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";

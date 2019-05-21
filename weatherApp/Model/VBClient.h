@@ -7,7 +7,7 @@
 //
 
 @import CoreLocation;
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 
 @interface VBClient : NSObject
