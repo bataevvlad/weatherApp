@@ -10,28 +10,12 @@
 #import <DLBlurredImage/UIImageView+DLBlurredImage.h>
 #import "VBManager.h"
 
-
-static const CGFloat   inset = 20;
-static const CGFloat   temperatureHeight = 110;
-static const CGFloat   hiloHeight = 40;
-static const CGFloat   iconHeight = 30;
-
 @interface ViewController ()
 
 @property (strong, nonatomic) UIImageView *backgroundImageView;
 @property (strong, nonatomic) UIImageView *blurredImageView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic) CGFloat     screenHeight;
-
-//@property (assign, nonatomic) CGRect      headerFrame;
-//@property (strong, nonatomic) UIView  *header;
-//@property (strong, nonatomic) UILabel *temperatureLabel;
-//@property (strong, nonatomic) UILabel *hiloLabel;
-//@property (strong, nonatomic) UILabel *cityLabel;
-//@property (strong, nonatomic) UILabel *conditionsLabel;
-//@property (strong, nonatomic) UIImageView *iconView;
-//@property (assign, nonatomic) CGRect temperatureFrame;
-//@property (assign, nonatomic) CGRect iconFrame;
 
 @property (strong, nonatomic) NSDateFormatter *hourlyFormatter;
 @property (strong, nonatomic) NSDateFormatter *dailyFormatter;
@@ -87,29 +71,19 @@ static const CGFloat   iconHeight = 30;
     self.tableView.pagingEnabled = YES;
     [self.view addSubview:self.tableView];
     
-//    self.headerFrame = [UIScreen mainScreen].bounds;
-//
-//    self.header = [[UIView alloc] initWithFrame:self.headerFrame];
-//    self.header.backgroundColor = [UIColor clearColor];
-//    self.tableView.tableHeaderView = self.header;
-//    [self hiloOutput];
-//    [self temperatureOutput];
-//    [self iconOutput];
-//    [self conditionsOutput];
-//    [self cityLabelOutput];
-    
-////FOR TEST
     CGRect headerFrame = [UIScreen mainScreen].bounds;
     
-    CGFloat inset = 20;
+    CGFloat inset = 100;
     
     CGFloat temperatureHeight = 110;
-    CGFloat hiloHeight = 40;
+    CGFloat hiloHeight = 80;
     CGFloat iconHeight = 30;
     
-    CGRect hiloFrame = CGRectMake(inset, headerFrame.size.height-hiloHeight, headerFrame.size.width- (2 * inset), hiloHeight);
+    CGRect hiloFrame = CGRectMake(inset, headerFrame.size.height- hiloHeight, headerFrame.size.width - (2 * inset), hiloHeight);
     
-    CGRect temperatureFrame = CGRectMake(inset, headerFrame.size.height- (temperatureHeight + hiloHeight), headerFrame.size.width - (2 * inset), temperatureHeight);
+    CGRect temperatureFrame = CGRectMake(inset, headerFrame.size.height - (temperatureHeight + hiloHeight), headerFrame.size.width - (2 * inset), temperatureHeight);
+    
+//    CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
     
     CGRect iconFrame = CGRectMake(inset, temperatureFrame.origin.y - iconHeight, iconHeight, iconHeight);
     
@@ -135,11 +109,11 @@ static const CGFloat   iconHeight = 30;
     hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:28];
     [header addSubview:hiloLabel];
     
-    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, 30)];
+    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, 90)];
     cityLabel.backgroundColor = [UIColor clearColor];
     cityLabel.textColor = [UIColor whiteColor];
     cityLabel.text = @"Loading...";
-    cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     cityLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:cityLabel];
     
@@ -155,8 +129,7 @@ static const CGFloat   iconHeight = 30;
     iconView.contentMode = UIViewContentModeScaleAspectFit;
     iconView.backgroundColor = [UIColor clearColor];
     [header addSubview:iconView];
-//FOR TEST
-    ///
+
     [[RACObserve([VBManager sharedManager], currentCondition)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(VBCondition *newCondition) {
@@ -166,7 +139,6 @@ static const CGFloat   iconHeight = 30;
          
          iconView.image = [UIImage imageNamed:[newCondition imageName]];
      }];
-    ///
     
     
     //returned value from the signal is assigned to the text key of the hiloLabel object
@@ -216,76 +188,6 @@ deliverOn:RACScheduler.mainThreadScheduler];
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Frames & Margins
-
-//- (void) hiloOutput {
-//
-//    CGRect hiloFrame = CGRectMake(inset,
-//                                  self.headerFrame.size.height - (3* hiloHeight),
-//                                  self.headerFrame.size.width + inset,
-//                                  hiloHeight);
-//
-//    UILabel *hiloLabel = [[UILabel alloc] initWithFrame:hiloFrame];
-//    hiloLabel.backgroundColor = [UIColor clearColor];
-//    hiloLabel.textColor = [UIColor whiteColor];
-//    hiloLabel.text = @"0° / 0°";
-//    hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:28];
-//    [self.header addSubview:hiloLabel];
-//}
-//
-//- (void) temperatureOutput {
-//
-//    self.temperatureFrame = CGRectMake(inset,
-//                                         self.headerFrame.size.height - (temperatureHeight + (3* hiloHeight)),
-//                                         self.headerFrame.size.width - (2 * inset),
-//                                         temperatureHeight);
-//
-//    UILabel *temperatureLabel = [[UILabel alloc] initWithFrame:self.temperatureFrame];
-//    temperatureLabel.backgroundColor = [UIColor clearColor];
-//    temperatureLabel.textColor = [UIColor whiteColor];
-//    temperatureLabel.text = @"0°";
-//    temperatureLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:120];
-//    [self.header addSubview:temperatureLabel];
-//}
-//
-//- (void) iconOutput {
-//
-//    self.iconFrame = CGRectMake(inset,
-//                                  self.temperatureFrame.origin.y - iconHeight,
-//                                  iconHeight,
-//                                  iconHeight);
-//
-//    UIImageView *iconView = [[UIImageView alloc] initWithFrame:self.iconFrame];
-//    iconView.contentMode = UIViewContentModeScaleAspectFit;
-//    iconView.backgroundColor = [UIColor clearColor];
-//    [self.header addSubview:iconView];
-//    //TODO icon;
-//}
-//
-//-(void) conditionsOutput {
-//
-//    CGRect conditionsFrame = self.iconFrame;
-//    conditionsFrame.size.width = self.view.bounds.size.width - (((2 * inset) + iconHeight) + 10);
-//    conditionsFrame.origin.x = self.iconFrame.origin.x + (iconHeight + 10);
-//
-//    UILabel *conditionsLabel = [[UILabel alloc] initWithFrame:conditionsFrame];
-//    conditionsLabel.backgroundColor = [UIColor clearColor];
-//    conditionsLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18];
-//    conditionsLabel.textColor = [UIColor whiteColor];
-//    [self.header addSubview:conditionsLabel];
-//}
-//
-//- (void) cityLabelOutput {
-//
-//    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.bounds.size.width, 30)];
-//    cityLabel.backgroundColor = [UIColor clearColor];
-//    cityLabel.textColor = [UIColor whiteColor];
-//    cityLabel.text = @"One moment...";
-//    cityLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:25];
-//    cityLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.header addSubview:cityLabel];
-//}
 
 #pragma mark - UITableView
 
