@@ -80,10 +80,36 @@ static const CGFloat   iconHeight = 30;
     [self iconOutput];
     [self conditionsOutput];
     [self cityLabelOutput];
-    
+
     //find curent location;
     [[VBManager sharedManager] findCurrentLocation];
     
+    //returned value from the signal is assigned to the text key of the hiloLabel object
+    RAC(self.hiloLabel, text) = [[RACSignal combineLatest:@[
+                                                           //combine the signals and use the latest values for both
+                                                           RACObserve([VBManager sharedManager], currentCondition.tempHigh),
+                                                           RACObserve([VBManager sharedManager], currentCondition.tempLow)]
+                                                           //reduce the values from your combined signals into a single value
+                                                  reduce:^(NSNumber *hi, NSNumber *low) {
+                                                      return [NSString  stringWithFormat:@"%.0f° / %.0f°",hi.floatValue,low.floatValue];
+                                                  }]
+                                 //deliver on main thread;
+deliverOn:RACScheduler.mainThreadScheduler];
+    
+    //observers current condition;
+    [[RACObserve([VBManager sharedManager], currentCondition)
+      //updating on main thread;
+      deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(VBCondition *newCondition) {
+         //update labels;
+         self.temperatureLabel.text = [NSString stringWithFormat:@"%.0f", newCondition.temperature.floatValue];
+         self.conditionsLabel.text = [newCondition.condition capitalizedString];
+         self.cityLabel.text = [newCondition.locationName capitalizedString];
+         //using mapped image;
+         self.iconView.image = [UIImage imageNamed:[newCondition imageName]];
+        }];
+    
+
 }
 
 - (void)viewWillLayoutSubviews {

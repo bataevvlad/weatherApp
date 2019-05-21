@@ -62,10 +62,8 @@
 //current conditions;
 - (RACSignal*) fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate{
     //Format URL;
-    ///wrong url;
-    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&APPID=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
+    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
-    ///
 
     //create signal;
     return [[self fetchJSONFromURL:url] map:^id _Nullable(NSDictionary *json) {
@@ -74,8 +72,8 @@
 }
 
 - (RACSignal*) fetchHourlyForecastForLoaction:(CLLocationCoordinate2D)coordinate {
-    ///wrong url;
-    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&APPID=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
+    
+    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/forecast/hourly?lat=%f&lon=%f&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
     
     NSURL *url = [NSURL URLWithString:urlString];
     //reusing fetchJSON;
@@ -92,8 +90,8 @@
 }
 
 - (RACSignal*) fetchDailyForecastForLoaction:(CLLocationCoordinate2D)coordinate {
-    ///wrong url;
-    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&APPID=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
+    
+    NSString *urlString = [NSString stringWithFormat:@"api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&cnt=10&appid=2b61358c47222923969614e819b3c483", coordinate.latitude, coordinate.longitude];
     
     NSURL *url = [NSURL URLWithString:urlString];
     

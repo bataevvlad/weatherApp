@@ -16,7 +16,7 @@
 @property (strong, nonatomic) NSNumber *temperature;
 @property (strong, nonatomic) NSNumber *tempHigh;
 @property (strong, nonatomic) NSNumber *tempLow;
-@property (strong, nonatomic) NSString *loactionName;
+@property (strong, nonatomic) NSString *locationName;
 @property (strong, nonatomic) NSDate *sunrise;
 @property (strong, nonatomic) NSDate *sunset;
 @property (strong, nonatomic) NSString *conditionDescription;
