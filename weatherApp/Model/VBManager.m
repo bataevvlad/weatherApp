@@ -73,8 +73,8 @@
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray*)locations {
-    //ignoring first loaction;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    //ignoring first location;
     //it always cached;
     if (self.isFirstUpdate) {
         self.isFirstUpdate = NO;

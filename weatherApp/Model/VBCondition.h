@@ -36,6 +36,6 @@
 
 @property (strong, nonatomic) NSString *icon;
 
-- (NSString*) imageName;
+- (NSString*)imageName;
 
 @end

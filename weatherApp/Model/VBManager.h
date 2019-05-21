@@ -13,14 +13,15 @@
 
 @interface VBManager : NSObject <CLLocationManagerDelegate>
 
+//will return appropriate type;
++(instancetype)sharedManager;
+
 //storing data, readonly - only manager can edit;
 @property (strong, readonly, nonatomic) CLLocation  *currentLocation;
 @property (strong, readonly, nonatomic) VBCondition *currentCondition;
 @property (strong, readonly, nonatomic) NSArray *hourlyForecast;
 @property (strong, readonly, nonatomic) NSArray *dailyForecast;
 
-//will return appropriate type;
-+(instancetype)sharedManager;
 
 //starts and refresh;
 -(void)findCurrentLocation;
