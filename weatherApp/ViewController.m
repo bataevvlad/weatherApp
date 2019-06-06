@@ -79,17 +79,15 @@
     CGFloat hiloHeight = 80;
     CGFloat iconHeight = 30;
     
-    CGRect hiloFrame = CGRectMake(inset, headerFrame.size.height- hiloHeight, headerFrame.size.width - (2 * inset), hiloHeight);
+    CGRect hiloFrame = CGRectMake(0, headerFrame.size.height- hiloHeight, headerFrame.size.width, hiloHeight);
     
-    CGRect temperatureFrame = CGRectMake(inset, headerFrame.size.height - (temperatureHeight + hiloHeight), headerFrame.size.width - (2 * inset), temperatureHeight);
-    
-//    CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+    CGRect temperatureFrame = CGRectMake(0, headerFrame.size.height - (temperatureHeight + hiloHeight), headerFrame.size.width, temperatureHeight);
     
     CGRect iconFrame = CGRectMake(inset, temperatureFrame.origin.y - iconHeight, iconHeight, iconHeight);
     
     CGRect conditonFrame = iconFrame;
-    conditonFrame.size.width = self.view.bounds.size.width - ((2 * inset) + 10);
-    conditonFrame.origin.x = iconFrame.origin.x + (iconHeight + 10);
+    conditonFrame.size.width = headerFrame.size.width;
+    conditonFrame.origin.x = 0;
     
     UIView *header = [[UIView alloc] initWithFrame:headerFrame];
     header.backgroundColor = [UIColor clearColor];
@@ -99,7 +97,8 @@
     temperatureLabel.backgroundColor = [UIColor clearColor];
     temperatureLabel.textColor = [UIColor whiteColor];
     temperatureLabel.text = @"0°";
-    temperatureLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:120];
+    temperatureLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:100];
+    temperatureLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:temperatureLabel];
     
     UILabel *hiloLabel = [[UILabel alloc] initWithFrame:hiloFrame];
@@ -107,6 +106,7 @@
     hiloLabel.textColor = [UIColor whiteColor];
     hiloLabel.text = @"0° / 0°";
     hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:28];
+    hiloLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:hiloLabel];
     
     UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, 90)];
@@ -122,6 +122,7 @@
     conditionsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
     conditionsLabel.textColor = [UIColor whiteColor];
     conditionsLabel.text = @"Clear";
+    conditionsLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:conditionsLabel];
     
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:iconFrame];
@@ -129,7 +130,7 @@
     iconView.contentMode = UIViewContentModeScaleAspectFit;
     iconView.backgroundColor = [UIColor clearColor];
     [header addSubview:iconView];
-
+    
     [[RACObserve([VBManager sharedManager], currentCondition)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(VBCondition *newCondition) {
@@ -143,17 +144,17 @@
     
     //returned value from the signal is assigned to the text key of the hiloLabel object
     RAC(hiloLabel, text) = [[RACSignal combineLatest:@[
-                                                           //combine the signals and use the latest values for both
-                                                           RACObserve([VBManager sharedManager], currentCondition.tempHigh),
-                                                           RACObserve([VBManager sharedManager], currentCondition.tempLow)]
-                                                           //reduce the values from your combined signals into a single value
-                                                  reduce:^id(NSNumber *hi, NSNumber *low) {
-                                                      return [NSString  stringWithFormat:@"%.0f℃/%.0f℃", hi.floatValue, low.floatValue];
-                                                  }]
-                                 //deliver on main thread;
-deliverOn:RACScheduler.mainThreadScheduler];
+                                                       //combine the signals and use the latest values for both
+                                                       RACObserve([VBManager sharedManager], currentCondition.tempHigh),
+                                                       RACObserve([VBManager sharedManager], currentCondition.tempLow)]
+                             //reduce the values from your combined signals into a single value
+                                              reduce:^id(NSNumber *hi, NSNumber *low) {
+                                                  return [NSString  stringWithFormat:@"%.0f℃/%.0f℃", hi.floatValue, low.floatValue];
+                                              }]
+                            //deliver on main thread;
+                            deliverOn:RACScheduler.mainThreadScheduler];
     
-
+    
     [[RACObserve([VBManager sharedManager], hourlyForecast)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(NSArray *newForecast) {
@@ -165,7 +166,7 @@ deliverOn:RACScheduler.mainThreadScheduler];
      subscribeNext:^(id x) {
          [self.tableView reloadData];
      }];
-
+    
     [[VBManager sharedManager] findCurrentLocation];
 }
 
@@ -296,3 +297,4 @@ deliverOn:RACScheduler.mainThreadScheduler];
 }
 
 @end
+
