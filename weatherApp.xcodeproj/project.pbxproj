@@ -14,8 +14,6 @@
 		84871410228EEB5900A30195 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8487140F228EEB5900A30195 /* Assets.xcassets */; };
 		84871413228EEB5900A30195 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84871411228EEB5900A30195 /* LaunchScreen.storyboard */; };
 		84871416228EEB5900A30195 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84871415228EEB5900A30195 /* main.m */; };
-		84871438228EEFD800A30195 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8487141D228EEFD800A30195 /* bg.png */; };
-		84871439228EEFD800A30195 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8487141E228EEFD800A30195 /* bg@2x.png */; };
 		8487143A228EEFD800A30195 /* weather-broken.png in Resources */ = {isa = PBXBuildFile; fileRef = 84871420228EEFD800A30195 /* weather-broken.png */; };
 		8487143B228EEFD800A30195 /* weather-broken@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84871421228EEFD800A30195 /* weather-broken@2x.png */; };
 		8487143C228EEFD800A30195 /* weather-clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 84871422228EEFD800A30195 /* weather-clear.png */; };
@@ -63,8 +61,6 @@
 		84871412228EEB5900A30195 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84871414228EEB5900A30195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84871415228EEB5900A30195 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8487141D228EEFD800A30195 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
-		8487141E228EEFD800A30195 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		84871420228EEFD800A30195 /* weather-broken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-broken.png"; sourceTree = "<group>"; };
 		84871421228EEFD800A30195 /* weather-broken@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-broken@2x.png"; sourceTree = "<group>"; };
 		84871422228EEFD800A30195 /* weather-clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-clear.png"; sourceTree = "<group>"; };
@@ -168,8 +164,6 @@
 				84871452228EF92200A30195 /* Moon.png */,
 				84871454228EF92200A30195 /* Sun.png */,
 				8487145C228EFCE200A30195 /* Sun2.png */,
-				8487141D228EEFD800A30195 /* bg.png */,
-				8487141E228EEFD800A30195 /* bg@2x.png */,
 				8487141F228EEFD800A30195 /* Weather Icons */,
 			);
 			path = imagesWeather;
@@ -301,7 +295,6 @@
 				84871450228EEFD800A30195 /* weather-tstorm.png in Resources */,
 				84871451228EEFD800A30195 /* weather-tstorm@2x.png in Resources */,
 				84871410228EEB5900A30195 /* Assets.xcassets in Resources */,
-				84871438228EEFD800A30195 /* bg.png in Resources */,
 				84871445228EEFD800A30195 /* weather-moon@2x.png in Resources */,
 				84871455228EF92200A30195 /* Moon.png in Resources */,
 				8487144C228EEFD800A30195 /* weather-shower.png in Resources */,
@@ -316,7 +309,6 @@
 				8487140E228EEB5900A30195 /* Main.storyboard in Resources */,
 				8487143D228EEFD800A30195 /* weather-clear@2x.png in Resources */,
 				84871443228EEFD800A30195 /* weather-mist@2x.png in Resources */,
-				84871439228EEFD800A30195 /* bg@2x.png in Resources */,
 				8487144D228EEFD800A30195 /* weather-shower@2x.png in Resources */,
 				8487144A228EEFD800A30195 /* weather-scattered.png in Resources */,
 				84871449228EEFD800A30195 /* weather-rain@2x.png in Resources */,
